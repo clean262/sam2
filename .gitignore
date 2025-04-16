@@ -9,3 +9,8 @@ _C.*
 outputs/*
 checkpoints/*.pt
 demo/backend/checkpoints/*.pt
+data_for_gui/**/*.png
+data_for_gui/**/*.jpeg
+data_for_gui/**/*.jpg
+data_for_gui/**/*.mp4
+tracked_colors.mp4

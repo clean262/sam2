@@ -1,18 +1,81 @@
 # SAM 2: Segment Anything in Images and Videos
 
-**[AI at Meta, FAIR](https://ai.meta.com/research/)**
+<!-- **[AI at Meta, FAIR](https://ai.meta.com/research/)** -->
 
-[Nikhila Ravi](https://nikhilaravi.com/), [Valentin Gabeur](https://gabeur.github.io/), [Yuan-Ting Hu](https://scholar.google.com/citations?user=E8DVVYQAAAAJ&hl=en), [Ronghang Hu](https://ronghanghu.com/), [Chaitanya Ryali](https://scholar.google.com/citations?user=4LWx24UAAAAJ&hl=en), [Tengyu Ma](https://scholar.google.com/citations?user=VeTSl0wAAAAJ&hl=en), [Haitham Khedr](https://hkhedr.com/), [Roman Rädle](https://scholar.google.de/citations?user=Tpt57v0AAAAJ&hl=en), [Chloe Rolland](https://scholar.google.com/citations?hl=fr&user=n-SnMhoAAAAJ), [Laura Gustafson](https://scholar.google.com/citations?user=c8IpF9gAAAAJ&hl=en), [Eric Mintun](https://ericmintun.github.io/), [Junting Pan](https://junting.github.io/), [Kalyan Vasudev Alwala](https://scholar.google.co.in/citations?user=m34oaWEAAAAJ&hl=en), [Nicolas Carion](https://www.nicolascarion.com/), [Chao-Yuan Wu](https://chaoyuan.org/), [Ross Girshick](https://www.rossgirshick.info/), [Piotr Dollár](https://pdollar.github.io/), [Christoph Feichtenhofer](https://feichtenhofer.github.io/)
+<!-- [Nikhila Ravi](https://nikhilaravi.com/), [Valentin Gabeur](https://gabeur.github.io/), [Yuan-Ting Hu](https://scholar.google.com/citations?user=E8DVVYQAAAAJ&hl=en), [Ronghang Hu](https://ronghanghu.com/), [Chaitanya Ryali](https://scholar.google.com/citations?user=4LWx24UAAAAJ&hl=en), [Tengyu Ma](https://scholar.google.com/citations?user=VeTSl0wAAAAJ&hl=en), [Haitham Khedr](https://hkhedr.com/), [Roman Rädle](https://scholar.google.de/citations?user=Tpt57v0AAAAJ&hl=en), [Chloe Rolland](https://scholar.google.com/citations?hl=fr&user=n-SnMhoAAAAJ), [Laura Gustafson](https://scholar.google.com/citations?user=c8IpF9gAAAAJ&hl=en), [Eric Mintun](https://ericmintun.github.io/), [Junting Pan](https://junting.github.io/), [Kalyan Vasudev Alwala](https://scholar.google.co.in/citations?user=m34oaWEAAAAJ&hl=en), [Nicolas Carion](https://www.nicolascarion.com/), [Chao-Yuan Wu](https://chaoyuan.org/), [Ross Girshick](https://www.rossgirshick.info/), [Piotr Dollár](https://pdollar.github.io/), [Christoph Feichtenhofer](https://feichtenhofer.github.io/)
 
 [[`Paper`](https://ai.meta.com/research/publications/sam-2-segment-anything-in-images-and-videos/)] [[`Project`](https://ai.meta.com/sam2)] [[`Demo`](https://sam2.metademolab.com/)] [[`Dataset`](https://ai.meta.com/datasets/segment-anything-video)] [[`Blog`](https://ai.meta.com/blog/segment-anything-2)] [[`BibTeX`](#citing-sam-2)]
 
-![SAM 2 architecture](assets/model_diagram.png?raw=true)
+![SAM 2 architecture](assets/model_diagram.png?raw=true) -->
 
-**Segment Anything Model 2 (SAM 2)** is a foundation model towards solving promptable visual segmentation in images and videos. We extend SAM to video by considering images as a video with a single frame. The model design is a simple transformer architecture with streaming memory for real-time video processing. We build a model-in-the-loop data engine, which improves model and data via user interaction, to collect [**our SA-V dataset**](https://ai.meta.com/datasets/segment-anything-video), the largest video segmentation dataset to date. SAM 2 trained on our data provides strong performance across a wide range of tasks and visual domains.
+<!-- **Segment Anything Model 2 (SAM 2)** is a foundation model towards solving promptable visual segmentation in images and videos. We extend SAM to video by considering images as a video with a single frame. The model design is a simple transformer architecture with streaming memory for real-time video processing. We build a model-in-the-loop data engine, which improves model and data via user interaction, to collect [**our SA-V dataset**](https://ai.meta.com/datasets/segment-anything-video), the largest video segmentation dataset to date. SAM 2 trained on our data provides strong performance across a wide range of tasks and visual domains. -->
 
-![SA-V dataset](assets/sa_v_dataset.jpg?raw=true)
+## 概要
+このレポジトリはMetaのSAM2を用いて、動画の切り抜きを行い、背景透過素材(GB)を作成するためのものです。
 
-## Latest updates
+SAM2公式の[**デモサイト**](https://sam2.metademolab.com/demo)の制限であるアップロード制限(70Mb)と出力fps(24)固定が無くなり
+より自由に切り抜きが行えるようになりました
+
+<!-- ![SA-V dataset](assets/sa_v_dataset.jpg?raw=true) -->
+![SA-V dataset](assets/image.png?raw=true)
+
+## 実行確認環境
+- windows 11
+- WSL2
+- Geforce RTX 3060
+- uv 0.6.14
+- cuda 11.8
+- Nvidia Driver Version: 560.94
+
+## インストール方法
+```bash
+ wsl
+ mkdir sam2_test
+ cd sam2_test
+ uv init
+ git clone git@github.com:clean262/sam2.git
+ . .venv/bin/activate
+ # このタイミングでpyproject.tomlを変更する
+ uv sync  # ここでpythonとpytorchのダウンロードが行われる
+ cd sam2
+ uv pip install requirements.txt
+ cd checkpoints
+ sed -i 's/\r$//' download_ckpts.sh
+ ./download_ckpts.sh && cd ..
+```
+以下がpyproject.toml
+```bash
+[project]
+name = "sam2-test"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+   "torch==2.5.1",
+   "torchvision==0.20.1",
+]
+
+
+ [tool.uv.sources]
+ torch = [
+   { index = "pytorch-cu118", marker = "sys_platform == 'linux' or sys_platform == 'win32'" },
+ ]
+ torchvision = [
+   { index = "pytorch-cu118", marker = "sys_platform == 'linux' or sys_platform == 'win32'" },
+ ]
+ 
+ [[tool.uv.index]]
+ name = "pytorch-cu118"
+ url = "https://download.pytorch.org/whl/cu118"
+ explicit = true
+```
+
+## デモ
+[![Video demo](assets/original_inori.png)](assets/original_inori.mp4)
+[![Video demo](assets/green_inori.png)](assets/green_inori.mp4)
+
+<!-- ## Latest updates
 
 **12/11/2024 -- full model compilation for a major VOS speedup and a new `SAM2VideoPredictor` to better handle multi-object tracking**
 
@@ -29,9 +92,9 @@
 
 ## Installation
 
-SAM 2 needs to be installed first before use. The code requires `python>=3.10`, as well as `torch>=2.5.1` and `torchvision>=0.20.1`. Please follow the instructions [here](https://pytorch.org/get-started/locally/) to install both PyTorch and TorchVision dependencies. You can install SAM 2 on a GPU machine using:
+SAM 2 needs to be installed first before use. The code requires `python>=3.10`, as well as `torch>=2.5.1` and `torchvision>=0.20.1`. Please follow the instructions [here](https://pytorch.org/get-started/locally/) to install both PyTorch and TorchVision dependencies. You can install SAM 2 on a GPU machine using: -->
 
-```bash
+<!-- ```bash
 git clone https://github.com/facebookresearch/sam2.git && cd sam2
 
 pip install -e .
@@ -96,9 +159,9 @@ Please refer to the examples in [image_predictor_example.ipynb](./notebooks/imag
 
 SAM 2 also supports automatic mask generation on images just like SAM. Please see [automatic_mask_generator_example.ipynb](./notebooks/automatic_mask_generator_example.ipynb) (also in Colab [here](https://colab.research.google.com/github/facebookresearch/sam2/blob/main/notebooks/automatic_mask_generator_example.ipynb)) for automatic mask generation in images.
 
-### Video prediction
+### Video prediction -->
 
-For promptable segmentation and tracking in videos, we provide a video predictor with APIs for example to add prompts and propagate masklets throughout a video. SAM 2 supports video inference on multiple objects and uses an inference state to keep track of the interactions in each video.
+<!-- For promptable segmentation and tracking in videos, we provide a video predictor with APIs for example to add prompts and propagate masklets throughout a video. SAM 2 supports video inference on multiple objects and uses an inference state to keep track of the interactions in each video.
 
 ```python
 import torch
@@ -191,7 +254,7 @@ You can train or fine-tune SAM 2 on custom datasets of images, videos, or both. 
 
 ## Web demo for SAM 2
 
-We have released the frontend + backend code for the SAM 2 web demo (a locally deployable version similar to https://sam2.metademolab.com/demo). Please see the web demo [README](demo/README.md) for details.
+We have released the frontend + backend code for the SAM 2 web demo (a locally deployable version similar to https://sam2.metademolab.com/demo). Please see the web demo [README](demo/README.md) for details. -->
 
 ## License
 

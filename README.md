@@ -87,8 +87,9 @@ dependencies = [
 ```
 
 ## デモ
-[![Video demo](assets/original_inori.png)](assets/original_inori.mp4)
-[![Video demo](assets/green_inori.png)](assets/green_inori.mp4)
+クリックすればyoutubeに飛びます
+[![Video demo](assets/original_inori.png)](https://youtu.be/I3ogXhRIf3g)
+[![Video demo](assets/green_inori.png)](https://www.youtube.com/watch?v=xkadMms9bfo)
 
 <!-- ## Latest updates
 

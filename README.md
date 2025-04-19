@@ -33,6 +33,8 @@ SAM2公式の[**デモサイト**](https://sam2.metademolab.com/demo)の制限�
 3. WSL2のインストール
 4. wsl上でuvをインストール
 5. 上記4つを終えた後以下のコマンドを実行
+6. data_for_guiフォルダのvideosフォルダに動画を入れる(英数字のみのファイル名推奨)
+7. `python mask_app.py --root_dir data_for_gui --checkpoint_dir checkpoints/sam2.1_hiera_tiny.pt --model_cfg configs/sam2.1/sam2.1_hiera_t.yaml`を実行
 ```bash
  wsl
  mkdir sam2_test

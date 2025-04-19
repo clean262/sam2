@@ -616,4 +616,4 @@ if __name__ == "__main__":
         args.img_name,
         args.mask_name
     )
-    demo.launch(server_port=args.port, share=True)
+    demo.launch(server_port=args.port, share=True, allowed_paths = ["/content/drive/MyDrive/data_sam2/"])

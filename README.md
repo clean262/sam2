@@ -13,7 +13,7 @@
 ## 概要
 このレポジトリはMetaのSAM2を用いて、動画の切り抜きを行い、背景透過素材(GB)を作成するためのものです。
 
-SAM2公式の[**デモサイト**](https://sam2.metademolab.com/demo)の制限であるアップロード制限(70Mb)と出力fps(24)固定が無くなり
+SAM2公式の[**デモサイト**](https://sam2.metademolab.com/demo)の制限であるアップロード制限(70Mb)と出力fps(24)固定が無くなり、
 より自由に切り抜きが行えるようになりました
 
 <!-- ![SA-V dataset](assets/sa_v_dataset.jpg?raw=true) -->
@@ -24,10 +24,15 @@ SAM2公式の[**デモサイト**](https://sam2.metademolab.com/demo)の制限�
 - WSL2
 - Geforce RTX 3060
 - uv 0.6.14
-- cuda 11.8
+- CUDA 11.8
 - Nvidia Driver Version: 560.94
 
 ## インストール方法
+1. Nvidia Driverのインストール
+2. CUDAのインストール(バージョン11.8推奨, 12.1ないし12.4でも実行できるはずではある)
+3. WSL2のインストール
+4. wsl上でuvをインストール
+5. 上記4つを終えた後以下のコマンドを実行
 ```bash
  wsl
  mkdir sam2_test
@@ -43,7 +48,15 @@ SAM2公式の[**デモサイト**](https://sam2.metademolab.com/demo)の制限�
  sed -i 's/\r$//' download_ckpts.sh
  ./download_ckpts.sh && cd ..
 ```
-以下がpyproject.toml
+以下のファイルがpyproject.tomlです。
+
+CUDAのバージョンが11.8以外の方は以下の`index = "pytorch-cu118"`,  `name = "pytorch-cu118"`,  `url = "https://download.pytorch.org/whl/cu118"`の部分を変更する必要があります。
+
+CUDAのバージョンが12.1の方は`index = "pytorch-cu121"`,  `name = "pytorch-cu121"`,  `url = "https://download.pytorch.org/whl/cu121"`に変更してください。
+
+CUDAのバージョンが12.4の方は`index = "pytorch-cu124"`,  `name = "pytorch-cu124"`,  `url = "https://download.pytorch.org/whl/cu124"`に変更してください。
+
+PyTorchの詳しいインストールについて知りたい方は[こちら](https://pytorch.org/get-started/previous-versions/)
 ```bash
 [project]
 name = "sam2-test"
